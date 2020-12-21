@@ -1,7 +1,7 @@
 server:
   port: 8989
 
-
+# 数据源
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -12,14 +12,15 @@ spring:
 
 # MyBatis
 mybatis:
-
+  # 搜索指定包别名 默认不支持通配符 此处优化自定义MyBatisConfig配置
   typeAliasesPackage: com.fadedos.*.entity
-
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
   mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件 :骆驼命名/自动返回主键/log/cache等设置 MyBatisConfig中提取
+  configLocation: classpath:mybatis/mybatis-config.xml
 
-
-
+# 日志
 logging:
-      level:
-        com.fadeos: debug
-        org.springframework: warn
+  level:
+    com.fadedos: debug
+    org.springframework: warn
