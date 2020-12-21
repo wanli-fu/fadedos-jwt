@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,10 +58,15 @@ public class UserController {
     }
 
     @PostMapping("/user/test")
-    public Map<String, Object> test() {
+    public Map<String, Object> test(HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
 
         //处理自己的业务逻辑
+        String token = request.getHeader("token");
+        DecodedJWT verify = JwtUtils.verify(token);
+        log.info("用户id:[{}]",verify.getClaim("name").asString());
+        log.info("用户id:[{}]",verify.getClaim("password").asString());
+        
         map.put("state", true);
         map.put("msg", "请求成功");
         return map;
